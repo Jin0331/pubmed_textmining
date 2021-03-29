@@ -156,7 +156,8 @@ if(length(arg) == 0){
     # ; 분리 후 행 추가
     gene_disease_gene <- gene_disease %>% filter(type == "Gene") %>% 
         separate_rows(identifier, convert = T) %>% 
-        filter(identifier != "None") # None remove
+        filter(identifier != "None")  %>% 
+        mutate(identifier = as.character(identifier)) # None remove
 
     # Entrez to HGNC(official), dict
     cols <- c("ENTREZID", "SYMBOL", "ENSEMBL", "GENENAME")
