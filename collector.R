@@ -186,5 +186,5 @@ if(length(arg) == 0){
     gene_disease_filter %>% 
         copy_to(dest = con_textmining, df = ., name = paste0(arg[1], "_gene_disease_pair"), overwrite = T, temporary = F, indexes = list("pmid"))
 
-    dbDisconnect(con)
+    dbDisconnect(con_textmining)
 }

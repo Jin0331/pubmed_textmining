@@ -29,7 +29,7 @@ cancer_type_search <- function(search_terms){
   cancer_terms %>% unique() %>% return()
 }
 term <- tbl(con_textmining, "Term_dict") %>% collect() %>% 
-  filter(Cancer_Type == "BRCA") %>% dplyr::select(-Cancer_Type) %>%
+  filter(Cancer_Type == "CHOL") %>% dplyr::select(-Cancer_Type) %>%
   as.character() %>% .[!is.na(.)]
 pmid_search <- cancer_type_search(search_terms = term)
 
@@ -139,12 +139,13 @@ title_abstract <- title_abstract %>% bind_rows()
 # ; 분리 후 행 추가
 gene_disease_gene <- gene_disease %>% filter(type == "Gene") %>% 
   separate_rows(identifier, convert = T) %>% 
-  filter(identifier != "None") # None remove
+  filter(identifier != "None") %>% 
+  mutate(identifier = as.character(identifier)) # None remove
 
 # Entrez to HGNC(official), dict
 cols <- c("ENTREZID", "SYMBOL", "ENSEMBL", "GENENAME")
-ent2hgnc <- gene_disease_gene$identifier %>% unique() %>%  ## mapping dict
-  AnnotationDbi::select(org.Hs.eg.db, keys = ., columns = cols, keytype="ENTREZID") %>% 
+ent2hgnc <- gene_disease_gene$identifier %>% unique() %>% as.character() %>%  ## mapping dict
+  AnnotationDbi::select(org.Hs.eg.db, keys = ., columns = cols, keytype="ENTREZID") %>%
   dplyr::select(identifier = ENTREZID, HGNC = SYMBOL) %>% distinct() %>% as_tibble()
 gene_disease_gene <- gene_disease_gene %>% left_join(x = ., y = ent2hgnc, by = "identifier")
 
@@ -163,10 +164,10 @@ gene_disease_filter <- bind_rows(gene_disease_disease, gene_disease_gene) %>% ar
 # db import
 # title_abstract import
 title_abstract %>% dplyr::select(pmid, year, journal, authors, title, abstract) %>% 
-  copy_to(dest = con_textmining, df = ., name = paste0("COAD", "_pubmed"), overwrite = T, temporary = F, indexes = list("pmid"))
+  copy_to(dest = con_textmining, df = ., name = paste0("CHOL", "_pubmed"), overwrite = T, temporary = F, indexes = list("pmid"))
 
 # gene-disease import
 gene_disease_filter %>% 
-  copy_to(dest = con_textmining, df = ., name = paste0("COAD", "_gene_disease_pair"), overwrite = T, temporary = F, indexes = list("pmid"))
+  copy_to(dest = con_textmining, df = ., name = paste0("CHOL", "_gene_disease_pair"), overwrite = T, temporary = F, indexes = list("pmid"))
 
-dbDisconnect(con)
+dbDisconnect(con_textmining)
