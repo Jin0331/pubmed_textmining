@@ -16,7 +16,7 @@ item_table_conversion_raw <- item_table %>% filter(pmid %in% not_human_pmid == F
   select(-MEDIC) %>% filter(type == "Gene") %>% rename(mapping = HGNC) %>%  ### gene 부분 
   bind_rows(., 
             item_table %>% select(-HGNC) %>% filter(type == "Disease") %>% rename(mapping = MEDIC) ### diasese 부분
-            ) %>%  ###### 이부분 
+            ) %>%  mutate(mapping = ifelse(type == "Gene", paste0("G_", mapping), paste0("D_", mapping))) %>% ###### 이부분 
   arrange(pmid) %>%  as.data.frame()
 
 # item_table_select <- item_table_conversion_raw %>% 
@@ -28,5 +28,21 @@ pmid_list <- split(item_table_conversion_raw$mapping , item_table_conversion_raw
 pmid_trans <- as(pmid_list, "transactions")
 
 # parameter create
-parameter <- new("APparameter", support = 0.001, confidence = 0.8, target = "rules", minlen = 2, maxlen = 5) 
+# run apriori
+parameter <- new("APparameter", support = 10e-6, confidence = 0.2, target = "rules", minlen = 2, maxlen = 2)  # 0.001
 apriori_result <- apriori(data = pmid_trans, parameter = parameter)
+
+# fishersExactTest
+quality(apriori_result) <- bind_cols(quality(apriori_result), 
+                                     p_value = interestMeasure(apriori_result, measure = "fishersExactTest",
+                                                              complements = T, transactions = pmid_trans, reuse = F))
+gene_symbol <- item_table_conversion_raw %>% filter(type == "Gene") %>% .$mapping %>% unique()
+apriori_result_filter <- apriori_result %>% DATAFRAME() %>% as_tibble() %>% 
+  select(-coverage) %>% 
+  filter(str_detect(string = LHS, pattern = "\\{G")) %>% 
+  filter(str_detect(string = RHS, pattern = "\\{D_Colorectal Neoplasms\\}")) %>% 
+  arrange(p_value)
+
+fdr_value <- apriori_result_filter$p_value %>% p.adjust(p = ., method = "fdr", n = length(.)) %>% tibble(FDR = .)
+apriori_result_filter %>% bind_cols(., fdr_value) %>% arrange(FDR) %>% #View()
+  write_delim(file = "COAD_textming(apriori)_dummy.txt", delim = "\t")
