@@ -29,7 +29,7 @@ cancer_type_search <- function(search_terms){
   cancer_terms %>% unique() %>% return()
 }
 term <- tbl(con_textmining, "Term_dict") %>% collect() %>% 
-  filter(Cancer_Type == "BRCA") %>% dplyr::select(-Cancer_Type) %>%
+  filter(Cancer_Type == "COAD") %>% dplyr::select(-Cancer_Type) %>%
   as.character() %>% .[!is.na(.)]
 pmid_search <- cancer_type_search(search_terms = term)
 
@@ -54,7 +54,7 @@ while(n <= total){ #length(pmid)
       all_node <- GET(paste0(url, "biocxml?pmids=", pmid, "&concepts=gene,disease")) %>% 
         httr::content(encoding = "UTF-8") %>% xml_find_all(".//document")
     },
-    error = function(e) { print(e);re <- TRUE}
+    error = function(e) { print(e);re <<- TRUE}
   )
   # time out 
   if(re) { next }
