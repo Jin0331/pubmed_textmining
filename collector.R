@@ -69,7 +69,7 @@ if(length(arg) == 0){
                 print(all_node)
             
             },
-            error = function(e) { print(e);re <- TRUE}
+            error = function(e) { print(e);re <<- TRUE}
         )
 
         
