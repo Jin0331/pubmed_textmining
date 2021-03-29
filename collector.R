@@ -103,9 +103,9 @@ if(length(arg) == 0){
             
             ## abstract
             abstract <- xml_abtstart %>% 
-            xml_find_first(., ".//text") %>% 
-            xml_text() %>% 
-            tibble(abstract = .)
+                xml_find_first(., ".//text") %>% 
+                xml_text() %>% 
+                tibble(abstract = .)
             
             title_ab_DF <-  title_ab_DF %>% bind_cols(., abstract) 
             
@@ -160,7 +160,7 @@ if(length(arg) == 0){
 
     # Entrez to HGNC(official), dict
     cols <- c("ENTREZID", "SYMBOL", "ENSEMBL", "GENENAME")
-    ent2hgnc <- gene_disease_gene$identifier %>% unique() %>%  ## mapping dict
+    ent2hgnc <- gene_disease_gene$identifier %>% unique() %>%  as.character() %>%   ## mapping dict
         AnnotationDbi::select(org.Hs.eg.db, keys = ., columns = cols, keytype="ENTREZID") %>% 
         dplyr::select(identifier = ENTREZID, HGNC = SYMBOL) %>% distinct() %>% as_tibble()
     gene_disease_gene <- gene_disease_gene %>% left_join(x = ., y = ent2hgnc, by = "identifier")
