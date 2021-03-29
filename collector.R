@@ -63,21 +63,19 @@ if(length(arg) == 0){
         re <- FALSE
         tryCatch(
             expr = {
-            all_node <- GET(paste0(url, "biocxml?pmids=", pmid, "&concepts=gene,disease")) %>% 
-                    httr::content(encoding = "UTF-8") %>% xml_find_all(".//document")
-
-                print(all_node)
-            
+            all_node <- GET(paste0(url, "biocxml?pmids=", pmid, "&concepts=gene,disease")) %>%
+                httr::content(encoding = "UTF-8") %>% xml_find_all(".//document")
             },
             error = function(e) { print(e);re <<- TRUE}
         )
 
-        
-    
         # time out 
-        if(re) { next }
-        # all node not found
-        if(length(all_node) == 0) { next }
+        if(re) {
+            print("time out")
+            next             
+        } else {
+            print(all_node)
+        }
         
         pubtator_node <- mclapply(X = all_node, FUN = function(pubtator_node){
             # pmid extraction
@@ -148,7 +146,7 @@ if(length(arg) == 0){
         
         print(paste0(n, " is done!@!"))
         rm(all_node, pubtator_node, temp_gene_disease, temp_title_abstract)
-        Sys.sleep(2) # van 방지 
+        Sys.sleep(1.3) # van 방지 
     }
 
         gene_disease <- gene_disease %>% bind_rows()
@@ -189,4 +187,3 @@ if(length(arg) == 0){
 
     dbDisconnect(con)
 }
-

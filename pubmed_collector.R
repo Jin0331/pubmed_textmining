@@ -29,7 +29,7 @@ cancer_type_search <- function(search_terms){
   cancer_terms %>% unique() %>% return()
 }
 term <- tbl(con_textmining, "Term_dict") %>% collect() %>% 
-  filter(Cancer_Type == "COAD") %>% dplyr::select(-Cancer_Type) %>%
+  filter(Cancer_Type == "BRCA") %>% dplyr::select(-Cancer_Type) %>%
   as.character() %>% .[!is.na(.)]
 pmid_search <- cancer_type_search(search_terms = term)
 
@@ -163,10 +163,10 @@ gene_disease_filter <- bind_rows(gene_disease_disease, gene_disease_gene) %>% ar
 # db import
 # title_abstract import
 title_abstract %>% dplyr::select(pmid, year, journal, authors, title, abstract) %>% 
-  copy_to(dest = con_textmining, df = ., name = paste0("OV", "_pubmed"), overwrite = T, temporary = F, indexes = list("pmid"))
+  copy_to(dest = con_textmining, df = ., name = paste0("COAD", "_pubmed"), overwrite = T, temporary = F, indexes = list("pmid"))
 
 # gene-disease import
 gene_disease_filter %>% 
-  copy_to(dest = con_textmining, df = ., name = paste0("OV", "_gene_disease_pair"), overwrite = T, temporary = F, indexes = list("pmid"))
+  copy_to(dest = con_textmining, df = ., name = paste0("COAD", "_gene_disease_pair"), overwrite = T, temporary = F, indexes = list("pmid"))
 
 dbDisconnect(con)
