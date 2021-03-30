@@ -1,16 +1,13 @@
-suppressPackageStartupMessages({
-  library(arules)
-  library(RMariaDB)
-  library(tidyverse)
-  library(data.table)
-})
+library(arules)
+library(RMariaDB)
+library(tidyverse)
+library(data.table)
 
 
 # db table load
 con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.86", port = 3306, user = "root", password = "sempre813!", dbname = "Textmining")
-
 # [cancerType_gene_disease_pair]
-cancer_type <- "CHOL"
+cancer_type <- "COAD"
 item_table <- tbl(con_textmining, paste0(cancer_type, "_gene_disease_pair")) %>% collect()
 
 # only human gene
@@ -39,24 +36,12 @@ apriori_result <- apriori(data = pmid_trans, parameter = parameter)
 quality(apriori_result) <- bind_cols(quality(apriori_result), 
                                      p_value = interestMeasure(apriori_result, measure = "fishersExactTest",
                                                               complements = T, transactions = pmid_trans, reuse = F))
-# gene symbol
 gene_symbol <- item_table_conversion_raw %>% filter(type == "Gene") %>% .$mapping %>% unique()
-
-# disease symbol
-disease_dict <- tbl(con_textmining, "Disease_dict_medic") %>% collect() 
-
-term <- tbl(con_textmining, "Term_dict") %>% collect() %>% 
-  filter(Cancer_Type == cancer_type) %>% dplyr::select(-Cancer_Type) %>%
-  as.character() %>% .[!is.na(.)]
-
-
 apriori_result_filter <- apriori_result %>% DATAFRAME() %>% as_tibble() %>% 
   select(-coverage) %>% 
-  filter(str_detect(string = LHS, pattern = "\\{G")) 
-
-
-  # filter(str_detect(string = RHS, pattern = "\\{D_Colorectal Neoplasms\\}")) %>% 
-  # arrange(p_value)
+  filter(str_detect(string = LHS, pattern = "\\{G")) %>% 
+  filter(str_detect(string = RHS, pattern = "\\{D_Colorectal Neoplasms\\}")) %>% 
+  arrange(p_value)
 
 fdr_value <- apriori_result_filter$p_value %>% p.adjust(p = ., method = "fdr", n = length(.)) %>% tibble(FDR = .)
 apriori_result_filter %>% bind_cols(., fdr_value) %>% arrange(FDR) %>% #View()

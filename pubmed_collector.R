@@ -5,7 +5,8 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(RMariaDB)
   library(org.Hs.eg.db)
-  library(AnnotationDbi)})
+  library(AnnotationDbi)
+  })
 
 # db connection
 con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.86", port = 3306, user = "root", password = "sempre813!",
@@ -21,15 +22,22 @@ cancer_type_search <- function(search_terms){
     cancer_terms <- c()
     for(term in search_terms){
       temp <- entrez_search(db="pubmed", term = paste0('"', term, '"', " AND 1900:2020[PDAT]"), retmax=999999999)
+      if(length(temp) == 0){ 
+        next 
+      }
       print(temp$QueryTranslation)
       cancer_terms <- c(cancer_terms, temp$ids)
     }
   }
   
-  cancer_terms %>% unique() %>% return()
+  if(is.list(cancer_terms)){
+    cancer_terms %>% unlist() %>% unique() %>% return()
+  } else{
+    cancer_terms %>% unique() %>% return()
+  }
 }
 term <- tbl(con_textmining, "Term_dict") %>% collect() %>% 
-  filter(Cancer_Type == "CHOL") %>% dplyr::select(-Cancer_Type) %>%
+  filter(Cancer_Type == "HNSC") %>% dplyr::select(-Cancer_Type) %>%
   as.character() %>% .[!is.na(.)]
 pmid_search <- cancer_type_search(search_terms = term)
 
