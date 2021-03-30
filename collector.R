@@ -35,7 +35,11 @@ if(length(arg) == 0){
         cancer_terms <- c(cancer_terms, temp$ids)
         }
     }
-    cancer_terms %>% unique() %>% return()
+        if(is.list(cancer_terms)){
+            cancer_terms %>% unlist() %>% unique() %>% return()
+        } else{
+            cancer_terms %>% unique() %>% return()
+        }
     }
 
     term <- tbl(con_textmining, "Term_dict") %>% collect() %>% 
@@ -53,6 +57,8 @@ if(length(arg) == 0){
     title_abstract <- list()
     gene_disease <- list()
     total <- pmid_search %>% length()
+
+    print(paste0("pmid : ", total))
 
     # Pubtator API run
     while(n <= total){ #length(pmid)
@@ -186,5 +192,6 @@ if(length(arg) == 0){
     gene_disease_filter %>% 
         copy_to(dest = con_textmining, df = ., name = paste0(arg[1], "_gene_disease_pair"), overwrite = T, temporary = F, indexes = list("pmid"))
 
+    print(paste0(arg[1], " is succeed!!!"))
     dbDisconnect(con_textmining)
 }
