@@ -10,7 +10,7 @@ suppressPackageStartupMessages({
 con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.86", port = 3306, user = "root", password = "sempre813!", dbname = "Textmining")
 
 # [cancerType_gene_disease_pair]
-cancer_type <- "CHOL"
+cancer_type <- "THCA"
 item_table <- tbl(con_textmining, paste0(cancer_type, "_gene_disease_pair")) %>% collect()
 
 # only human gene
@@ -55,6 +55,7 @@ apriori_result_filter <- apriori_result %>% DATAFRAME() %>% as_tibble() %>%
   filter(str_detect(string = LHS, pattern = "\\{G")) 
 
 
+apriori_result_filter$RHS %>% table() %>% sort(decreasing = T) %>% View()
   # filter(str_detect(string = RHS, pattern = "\\{D_Colorectal Neoplasms\\}")) %>% 
   # arrange(p_value)
 

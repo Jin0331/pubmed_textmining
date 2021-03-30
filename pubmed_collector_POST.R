@@ -6,7 +6,7 @@ suppressPackageStartupMessages({
   library(RMariaDB)
   library(org.Hs.eg.db)
   library(AnnotationDbi)
-  })
+})
 
 # db connection
 con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.86", port = 3306, user = "root", password = "sempre813!",
@@ -38,12 +38,12 @@ cancer_type_search <- function(search_terms){
 }
 
 term <- tbl(con_textmining, "Term_dict") %>% collect() %>% 
-  filter(Cancer_Type == "DLBC") %>% dplyr::select(-Cancer_Type) %>%
+  filter(Cancer_Type == "BRCA") %>% dplyr::select(-Cancer_Type) %>%
   as.character() %>% .[!is.na(.)]
 pmid_search <- cancer_type_search(search_terms = term)
 
 # Pubtator --> title, abstract, gene/disease keyword extractions
-url <- "https://www.ncbi.nlm.nih.gov/research/pubtator-api/publications/export/"
+url <- "https://www.ncbi.nlm.nih.gov/research/pubtator-api/publications/export/biocxml"
 n <- 0 # splice count
 index <- 1
 title_abstract <- list()
@@ -53,13 +53,13 @@ total <- pmid_search %>% length()
 # Pubtator API run
 while(n <= total){ #length(pmid)
   # NA remove
-  pmid <- pmid_search[(n+1):(n+100)] %>% .[!is.na(.)]  %>% paste(collapse = ",")
+  pmid <- pmid_search[(n+1):(n+1000)] %>% .[!is.na(.)]
   
   # GET 방식 limit 100 request
   re <- FALSE
   tryCatch(
     expr = {
-      all_node <- GET(paste0(url, "biocxml?pmids=", pmid, "&concepts=gene,disease")) %>% 
+      all_node <- POST(url, body = list(pmids = pmid, concepts = c("gene","disease")), encode = "json") %>% 
         httr::content(encoding = "UTF-8") %>% xml_find_all(".//document")
     },
     error = function(e) { print(e);re <<- TRUE}
@@ -132,8 +132,8 @@ while(n <= total){ #length(pmid)
     dplyr::select(pmid, year, journal, authors, title = text, abstract)
   # title_abstract <- title_abstract %>% bind_rows(., temp_title_abstract)
   title_abstract[[index]] <- temp_title_abstract
- 
-  n <- n + 100 # get size
+  
+  n <- n + 1000 # get size
   index <- index + 1 # list 저장 index
   
   print(paste0(n, " is done!@!"))
@@ -143,7 +143,7 @@ while(n <= total){ #length(pmid)
 
 gene_disease <- gene_disease %>% bind_rows()
 title_abstract <- title_abstract %>% bind_rows()
- # gene-disease pair
+# gene-disease pair
 # ; 분리 후 행 추가
 gene_disease_gene <- gene_disease %>% filter(type == "Gene") %>% 
   separate_rows(identifier, convert = T) %>% 
@@ -165,7 +165,7 @@ gene_disease_disease <- gene_disease %>%
   filter(type == "Disease", identifier != "None") %>% 
   left_join(x = ., y = disease_dict, by = "identifier") %>% 
   mutate(MEDIC = ifelse(is.na(MEDIC), identifier, MEDIC))
-  
+
 # gene-disease bind_rows
 gene_disease_filter <- bind_rows(gene_disease_disease, gene_disease_gene) %>% arrange(pmid)
 
