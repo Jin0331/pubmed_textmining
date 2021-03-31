@@ -67,7 +67,7 @@ if(length(arg) == 0){
     apriori_result_DF %>% 
         copy_to(dest = con_textmining_result, df = ., name = paste0(cancer_type, "_Result"), overwrite = T, temporary = F, indexes = list("Name"))
 
-    print(paste0(cancer_type, "is done!@!@!"))
+    print(paste0(cancer_type, " is done!@!@!"))
 
     dbDisconnect(con_textmining)
     dbDisconnect(con_textmining_result)
