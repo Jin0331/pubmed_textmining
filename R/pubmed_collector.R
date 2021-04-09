@@ -9,7 +9,7 @@ suppressPackageStartupMessages({
   })
 
 # db connection
-con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.86", port = 3306, user = "root", password = "sempre813!",
+con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.86", port = 3306, user = "root", password = "-",
                                  dbname = "Textmining")
 
 # search_terms : terms of specific cancer type 
