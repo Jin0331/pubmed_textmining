@@ -17,7 +17,7 @@ if(length(arg) == 0){
     else {
       cancer_terms <- c()
       for(term in search_terms){
-        temp <- entrez_search(db="pubmed", term = paste0('"', term, '"[title/abstract]', 'AND 1900:2021[PDAT]'), retmax=999999999)
+        temp <- entrez_search(db="pubmed", term = paste0('"', term, '"[title/abstract]', 'AND 1900:2022[PDAT]'), retmax=999999999)
         print(temp$QueryTranslation)
         cancer_terms <- c(cancer_terms, temp$ids)
       }
@@ -37,7 +37,8 @@ if(length(arg) == 0){
     library(tidyverse)
     library(RMariaDB)
     library(org.Hs.eg.db)
-    library(AnnotationDbi)})
+    library(AnnotationDbi)
+    library(parallel)})
   
   con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.91", port = 3306, user = "root", password = "sempre813!",
                                    dbname = "Textmining")
