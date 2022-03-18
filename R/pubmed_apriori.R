@@ -44,6 +44,7 @@ if(length(arg) == 0){
                                    dbname = "Textmining")
   base_path <- arg[2]
   setwd(arg[2])
+  dir.create("RAW_DATA")
   
   # search_terms : terms of specific cancer type 
   # pubmed collect
