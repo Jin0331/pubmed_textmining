@@ -1,0 +1,28 @@
+Cancer_Type	Main_term	Mesh1	Mesh2	Mesh3	Mesh4	Mesh5	Mesh6	Mesh7	Mesh8	Mesh9	Mesh10	Mesh11	Mesh12	Mesh13	Mesh14	Mesh15	Mesh16	Mesh17
+ACC	"Carcinoma, Adenoid Cystic"	"Carcinoma, Adenoid Cystic"	Adrenocortical Carcinoma	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+BLCA	Urinary Bladder Neoplasms	Urinary Bladder Neoplasms	Gallbladder Neoplasms	Urachal adenocarcinoma	Urachal cancer	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+BRCA	Breast Neoplasms	"Carcinoma, Ductal, Breast"	"Carcinoma, Lobular"	Breast Carcinoma In Situ	Breast Neoplasms	Angiosarcoma of the breast	Breast Cancer 3	"Breast Cancer, Familial"	Breast Carcinoma In Situ	"Breast Neoplasms, Male"	Erosive Adenomatosis of the Nipple	Hereditary Breast and Ovarian Cancer Syndrome	Inflammatory Breast Neoplasms	Radiation induced angiosarcoma of the breast	Secretory breast carcinoma	Triple Negative Breast Neoplasms	Unilateral Breast Neoplasms	NA
+LGG	Glioma	Brain Neoplasms	"Angiomatosis, diffuse corticomeningeal, of Divry and Van Bogaert"	"Cerebral astrocytoma, adult"	Cerebral sarcoma	Cerebral Ventricle Neoplasms	Cerebroretinal Microangiopathy with Calcifications and Cysts	Desmoplastic cerebral astrocytoma of infancy	Familial capillaro-venous leptomeningeal angiomatosis	"Glioma of Brain, Familial"	Infratentorial Neoplasms	Neurocytoma	Pascual Castroviejo syndrome	Pinealoma	Rhabdoid Tumor Predisposition Syndrome 1	Supratentorial Neoplasms	Turcot syndrome	Glioma
+CESC	Uterine Cervical Neoplasms	Uterine Cervical Neoplasms	Glassy cell carcinoma of the cervix	Primary malignant melanoma of the cervix	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+CHOL	Cholangiocarcinoma	Cholangiocarcinoma	Klatskin Tumor	Gallbladder Neoplasms	Bile Duct Neoplasms	Common Bile Duct Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+COAD	Colorectal Neoplasms	Colorectal Neoplasms	Colonic Neoplasms	Rectal Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+UCEC	Endometrial Neoplasms	Uterine Neoplasms	Adenosarcoma of the uterus	Endometrial Neoplasms	Hereditary leiomyomatosis and renal cell cancer	Leiomyoma of vulva and esophagus	Uterine Cervical Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+ESCA	Esophageal Neoplasms	Gastrointestinal Neoplasms	Blue rubber bleb nevus syndrome	Esophageal Neoplasms	Gastrointestinal Stromal Tumors	Intestinal Neoplasms	"Polyps, Multiple And Recurrent Inflammatory Fibroid, Gastrointestinal"	Stomach Neoplasms	Zollinger-Ellison Syndrome	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HNSC	Head and Neck Neoplasms	Squamous Cell Carcinoma of Head and Neck	Head and Neck Neoplasms	Esophageal Neoplasms	Facial Neoplasms	Mouth Neoplasms	Otorhinolaryngologic Neoplasms	Parathyroid Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+LIHC	"Carcinoma, Hepatocellular"	"Carcinoma, Hepatocellular"	Liver Neoplasms	"Adenoma, Liver Cell"	"Carcinoma, Hepatocellular"	"Hepatic Adenomas, Familial"	"Liver Neoplasms, Experimental"	Pascual Castroviejo syndrome	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+LUAD	Adenocarcinoma of Lung	Adenocarcinoma of Lung	Lung Neoplasms	Pulmonary Blastoma	Pulmonary Sclerosing Hemangioma	"Carcinoma, Non-Small-Cell Lung"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+LUSC	Lung Neoplasms	Lung Neoplasms	"Carcinoma, Non-Small-Cell Lung"	"Carcinoma, Squamous Cell"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+DLBC	Lymphoma	Lymphoma	"Lymphoma, Non-Hodgkin"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+OV	Ovarian Neoplasms	"Carcinoma, Ovarian Epithelial"	Ovarian Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+PAAD	Pancreatic Neoplasms	"Carcinoma, Pancreatic Ductal"	Pancreatic Neoplasms	Pancreatic Carcinoma	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+PCPG	Pheochromocytoma	Pheochromocytoma	Paraganglioma	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+MESO	Mesothelioma	Mesothelioma	MESH:C562839	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+PRAD	Prostatic Neoplasms	Prostatic Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+SARC	Sarcoma	Sarcoma	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+SKCM	Melanoma	Melanoma	Skin Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+TGCT	Testicular Neoplasms	Testicular Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+THYM	Thymoma	Thymoma	Thymus Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+THCA	Thyroid Neoplasms	Thyroid Neoplasms	"Thyroid Cancer, Papillary"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+UVM	Uveal melanoma	Uveal melanoma	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+KIDNEY	"Papillary renal cell carcinoma, sporadic"	"Papillary renal cell carcinoma, sporadic"	Kidney Neoplasms	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+GBM	Glioblastoma	Glioma	Brain Neoplasms	Astrocytoma	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA

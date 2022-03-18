@@ -270,12 +270,12 @@ if(length(arg) == 0){
     mutate(LHS = str_remove_all(string = LHS, pattern = "(\\{)|(\\})"),
                                  RHS = str_remove_all(string = RHS, pattern = "(\\{)|(\\})")) %>% 
     arrange(desc(count)) %>% 
-    dplyr::rename(Name = LHS, Cancer_type = RHS, SUPPORT = support, CONFIDENCE = confidence, LIFT = lift, COUNT = count)
+    dplyr::rename(gene = LHS, type = RHS, SUPPORT = support, CONFIDENCE = confidence, LIFT = lift, COUNT = count)
   
   
   # apriori result db import
   apriori_result_DF %>% 
-    copy_to(dest = con_textmining, df = ., name = cancer_type, overwrite = T, temporary = F, indexes = list("Name"))
+    copy_to(dest = con_textmining, df = ., name = cancer_type, overwrite = T, temporary = F, indexes = list("gene"))
   
   print(paste0(cancer_type, " is done!@!@!"))
   

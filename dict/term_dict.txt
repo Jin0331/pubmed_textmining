@@ -1,0 +1,28 @@
+Cancer_Type	Term1	Term2	Term3	Term4	Term5	Term6	Term7
+ACC	adenoid cystic carcinoma	NA	NA	NA	NA	NA	NA
+BLCA	bladder cancer	bladder carcinoma	Bladder Urothelial Carcinoma	NA	NA	NA	NA
+BRCA	breast cancer	ductal carcinoma	lobular carcinoma	Breast invasive carcinoma	NA	NA	NA
+CESC	cervical cancer	cervical carcinoma	Cervical squamous cell carcinoma	endocervical adenocarcinoma	NA	NA	NA
+CHOL	bile duct cancer	cholangiocarcinoma	gallbladder cancer	cancer of the ampulla of vater	Klatskin tumor	NA	NA
+COAD	colorectal cancer	bowel cancer	colon cancer	rectal cancer	Colon adenocarcinoma	NA	NA
+DLBC	lymphoma	lymphatic cancer	non-hodgkin lymphoma	Lymphoid Neoplasm Diffuse Large B-cell Lymphoma	NA	NA	NA
+ESCA	gastroesophageal cancer	esophageal cancer	esophageal carcinoma	oesophageal carcinoma	gastric cancer	stomach cancer	gastric carcinoma
+HNSC	head and neck cancer	throat cancer	oral cancer	laryngeal cacner	oropharyngeal cancer	NA	NA
+KIDNEY	kidney cancer	renal cancer	renal cell carcinoma	Kidney Chromophobe	Kidney renal clear cell carcinoma	Kidney renal papillary cell carcinoma	NA
+LGG	brain tumor	meningioma	astrocytoma	glioblastoma	glioma	NA	NA
+LIHC	liver cancer	hepatic cancer	hepatocellular carcinoma	liver hepatocellular carcinoma	NA	NA	NA
+LUAD	adenocarcinoma of the lung	lung adenocarcinoma	pulmonary adenocarcinoma	NA	NA	NA	NA
+LUSC	squamous cell carcinoma of the lung	squamous cell lung cancer	squamous cell lung carcinoma	Lung squamous cell carcinoma	NA	NA	NA
+MESO	mesothelioma	pleural tumor	NA	NA	NA	NA	NA
+OV	ovarian cancer	ovarian carcinoma	NA	NA	NA	NA	NA
+PAAD	pancreatic cancer	pancreatic adenocarcinoma	pancreatic ductal adenocarcinoma	pancreatic neuroendocrine tumors	NA	NA	NA
+PCPG	pheochromocytoma	phaeochromocytoma	paragangliomas	NA	NA	NA	NA
+PRAD	prostate cancer	prostatic carcinoma	carcinoma of the prostate	Prostate adenocarcinoma	NA	NA	NA
+SARC	sarcoma	NA	NA	NA	NA	NA	NA
+SKCM	melanoma	cutaneous melanoma	desmoplastic melanoma	skin cancer	NA	NA	NA
+TGCT	testicular cancer	germ cell tumor	NA	NA	NA	NA	NA
+THCA	thymic cancer	thyroid cancer	thyroid carcinoma	NA	NA	NA	NA
+THYM	testis tumor	thymoma	thymoma	thymic carcinoma	thymus cancer	NA	NA
+UCEC	endometrial cancer	uterine cancer	endometroid carcinoma	endometrial carcinoma	NA	NA	NA
+UVM	uveal melanoma	NA	NA	NA	NA	NA	NA
+GBM	glioblastoma	glioblastoma multiforme	NA	NA	NA	NA	NA
