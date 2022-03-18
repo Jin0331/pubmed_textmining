@@ -2,7 +2,6 @@
 *.Rhistory
 *.RData
 *.Ruserdata
-*.txt
 .Rproj.user
 RAW_DATA/
 RAW_DATA_old/
