@@ -252,7 +252,7 @@ if(length(arg) == 0){
   main_terms <- read_delim(file = "dict/term_dict_mesh.txt", delim = "\t", show_col_types = FALSE) %>% 
     dplyr::filter(Cancer_Type == cancer_type) %>% 
     dplyr::select(-Cancer_Type) %>% 
-    as.character() %>% .[!is.na(.)] # main term index 1, other 2:n
+    as.character() %>% .[!is.na(.)] %>% trimws(which = "both")# main term index 1, other 2:n
   
   # run apriori, lhs == gene & rhs == main_terms
   suppressWarnings({
