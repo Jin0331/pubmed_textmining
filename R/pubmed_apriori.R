@@ -33,7 +33,7 @@ if(length(arg) == 0){
   packages <- c("httr", "xml2", "rentrez", "tidyverse", "RMariaDB", "BiocManager", "parallel")
   install.packages(setdiff(packages, rownames(installed.packages())))  
   
-  BiocManager::install(c("org.Hs.eg.db", "AnnotationDbi"), ask = FALSE, force = TRUE)
+  # BiocManager::install(c("org.Hs.eg.db", "AnnotationDbi"), ask = FALSE, force = TRUE)
 
   # library load
   suppressPackageStartupMessages({
@@ -267,11 +267,8 @@ if(length(arg) == 0){
   
   # run apriori, lhs == gene & rhs == main_terms
   suppressWarnings({
-    apriori_result <- apriori(data = pmid_trans, parameter = parameter) %>% 
-      arules::subset(x = ., subset = lhs %in% gene_symbol) %>% 
-      arules::subset(subset = (rhs %in% main_terms[1]))
+    apriori_result <- apriori(data = pmid_trans, parameter = parameter) 
   })
-  
   
   # fisher's exact test
   
@@ -281,6 +278,8 @@ if(length(arg) == 0){
     dplyr::select(-coverage) %>% 
     mutate(LHS = str_remove_all(string = LHS, pattern = "(\\{)|(\\})"),
                                  RHS = str_remove_all(string = RHS, pattern = "(\\{)|(\\})")) %>% 
+    filter(RHS %in% main_terms) %>% 
+    filter(LHS %in% gene_symbol) %>% 
     arrange(desc(count)) %>% 
     dplyr::rename(gene = LHS, type = RHS, SUPPORT = support, CONFIDENCE = confidence, LIFT = lift, COUNT = count)
   
