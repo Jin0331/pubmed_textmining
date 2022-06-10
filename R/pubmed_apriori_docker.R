@@ -29,12 +29,6 @@ if(length(arg) == 0){
     }
   }
   
-  # library check
-  packages <- c("httr", "xml2", "rentrez", "tidyverse", "RMariaDB", "BiocManager", "parallel")
-  install.packages(setdiff(packages, rownames(installed.packages())))  
-  
-  BiocManager::install(c("org.Hs.eg.db", "AnnotationDbi"), ask = FALSE, force = TRUE)
-
   # library load
   suppressPackageStartupMessages({
     library(httr)
@@ -47,10 +41,7 @@ if(length(arg) == 0){
     library(parallel)})
   
   con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.91", port = 3306, user = "root", password = "sempre813!",
-                                   dbname = "Textmining")
-  base_path <- arg[2]
-  setwd(arg[2])
-  
+                                   dbname = "Textmining")  
   # date
   run_date <- Sys.time() %>% str_split(pattern = " ") %>% unlist() %>% .[1]
   
