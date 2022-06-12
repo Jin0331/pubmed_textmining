@@ -48,6 +48,7 @@ if(length(arg) == 0){
   
   con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.91", port = 3306, user = "root", password = "sempre813!",
                                    dbname = "Textmining")
+  cancer_type_ <- cancer_type_
   base_path <- arg[2]
   setwd(arg[2])
   
@@ -59,10 +60,10 @@ if(length(arg) == 0){
   
   # search_terms : terms of specific cancer type 
   # pubmed collect
-  if(file.exists(paste0("RAW_DATA/", arg[1], "_", run_date,"_gene_disease_pair.txt")) == FALSE){
+  if(file.exists(paste0("RAW_DATA/", cancer_type_, "_", run_date,"_gene_disease_pair.txt")) == FALSE){
     print("Pubmed and Pubtator Search!!")
     term <- read_delim(file = "dict/term_dict.txt", delim = "\t", show_col_types = FALSE) %>% 
-      dplyr::filter(Cancer_Type == arg[1]) %>% 
+      dplyr::filter(Cancer_Type == cancer_type_) %>% 
       dplyr::select(-Cancer_Type) %>%
       as.character() %>% .[!is.na(.)] %>% 
       tolower()
@@ -208,13 +209,13 @@ if(length(arg) == 0){
     
     # title_abstract import
     title_abstract %>% dplyr::select(pmid, year, journal, authors,title, abstract) %>% 
-      write_delim(file = paste0("RAW_DATA/", arg[1], "_", run_date, "_pubmed.txt"), delim = "\t")
+      write_delim(file = paste0("RAW_DATA/", cancer_type_, "_", run_date, "_pubmed.txt"), delim = "\t")
     
     # gene-disease import
     gene_disease_filter %>% 
-      write_delim(file = paste0("RAW_DATA/", arg[1], "_", run_date,"_gene_disease_pair.txt"), delim = "\t")
+      write_delim(file = paste0("RAW_DATA/", cancer_type_, "_", run_date,"_gene_disease_pair.txt"), delim = "\t")
     
-    print(paste0(arg[1], "'s pubmed collect is succeed!!!"))
+    print(paste0(cancer_type_, "'s pubmed collect is succeed!!!"))
   }
   
   ## RUN Apriori ====
@@ -227,8 +228,7 @@ if(length(arg) == 0){
   con_textmining <- DBI::dbConnect(drv = MariaDB(), host = "192.168.0.91", port = 3306, user = "root", password = "sempre813!", dbname = "Textmining")
 
   # [cancerType_gene_disease_pair]
-  cancer_type <- arg[1]
-  item_table <- read_delim(file = paste0("RAW_DATA/", cancer_type, "_", run_date,"_gene_disease_pair.txt"), delim = "\t",
+  item_table <- read_delim(file = paste0("RAW_DATA/", cancer_type_, "_", run_date,"_gene_disease_pair.txt"), delim = "\t",
                            show_col_types = FALSE)
   
   # only human gene
@@ -261,7 +261,7 @@ if(length(arg) == 0){
     dplyr::filter(type == "Gene") %>% .$mapping %>%
     unique()
   main_terms <- read_delim(file = "dict/term_dict_mesh.txt", delim = "\t", show_col_types = FALSE) %>% 
-    dplyr::filter(Cancer_Type == cancer_type) %>% 
+    dplyr::filter(Cancer_Type == cancer_type_) %>% 
     dplyr::select(-Cancer_Type) %>% 
     as.character() %>% .[!is.na(.)] %>% trimws(which = "both")# main term index 1, other 2:n
   
@@ -286,9 +286,9 @@ if(length(arg) == 0){
   
   # apriori result db import
   apriori_result_DF %>% 
-    copy_to(dest = con_textmining, df = ., name = cancer_type, overwrite = T, temporary = F, indexes = list("gene"))
+    copy_to(dest = con_textmining, df = ., name = cancer_type_, overwrite = T, temporary = F, indexes = list("gene"))
   
-  print(paste0(cancer_type, " is done!@!@!"))
+  print(paste0(cancer_type_, " is done!@!@!"))
   
   dbDisconnect(con_textmining)
 }
